@@ -9,6 +9,8 @@ const bodyParser = require('body-parser')
 
 const fs = require('fs/promises')
 
+const cors = require('cors')
+
 require('dotenv').config()
 
 console.log(process.env.TEST)
@@ -22,6 +24,8 @@ const port = process.env.PORT
 
 
 app.use(bodyParser.json())
+
+app.use(cors())
 
 app.get('/challenges', async (req, res) => {
     try {
