@@ -20,13 +20,16 @@ const dbName = "session7_project";
 
 const port = process.env.PORT
 
+
+app.use(bodyParser.json())
+
 app.get('/challenges', async (req, res) => {
     try {
         await client.connect()
         const colli = client.db(dbName).collection('challenges')
         const clngs = await colli.find({}).toArray()
 
-        res.status(200).send(clngs)
+        res.status(200).json(clngs)
     } catch (error) {
         console.log(error)
         res.status(500).send({
@@ -37,8 +40,6 @@ app.get('/challenges', async (req, res) => {
         await client.close()
     }
 })
-
-app.use(bodyParser.json())
 
 app.post('/challenges', async (req, res) => {
     try {
