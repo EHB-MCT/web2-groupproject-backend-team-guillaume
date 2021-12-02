@@ -13,10 +13,6 @@ require('dotenv').config()
 
 console.log(process.env.TEST)
 
-// Replace the following with your Atlas connection string                                                                                                                                        
-
-const url = "";
-
 const client = new MongoClient(process.env.URL);
 
 // The database to use
