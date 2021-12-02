@@ -1,27 +1,28 @@
-import {
+const {
     MongoClient
-} from 'mongodb';
+} = require('mongodb')
 
-import express from 'express';
+const express = require('express')
 const app = express()
 
-import bodyParser from 'body-parser';
+const bodyParser = require('body-parser')
 
-import fs from 'fs/promises'
-import {
-    receiveMessageOnPort
-} from 'worker_threads';
+const fs = require('fs/promises')
+
+require('dotenv').config()
+
+console.log(process.env.TEST)
 
 // Replace the following with your Atlas connection string                                                                                                                                        
 
-const url = "mongodb+srv://project:project@cluster0.t4a9d.mongodb.net/session7_project?retryWrites=true&w=majority";
+const url = "";
 
-const client = new MongoClient(url);
+const client = new MongoClient(process.env.URL);
 
 // The database to use
 const dbName = "session7_project";
 
-const port = 3000
+const port = process.env.PORT
 
 app.get('/challenges', async (req, res) => {
     try {
