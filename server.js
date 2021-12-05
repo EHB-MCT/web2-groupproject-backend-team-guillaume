@@ -1,15 +1,17 @@
-const {
+import {
     MongoClient
-} = require('mongodb')
+} from 'mongodb'
 
-const express = require('express')
+import express from 'express'
 const app = express()
 
-const bodyParser = require('body-parser')
+import {
+    json
+} from 'body-parser'
 
-const fs = require('fs/promises')
+import fs from 'fs/promises'
 
-const cors = require('cors')
+import cors from 'cors'
 
 require('dotenv').config()
 
@@ -23,7 +25,7 @@ const dbName = "session7_project";
 const port = process.env.PORT
 
 
-app.use(bodyParser.json())
+app.use(json())
 //app.use(express.static('public'))
 app.use(cors())
 
