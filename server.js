@@ -1,17 +1,13 @@
-import {
+const {
     MongoClient
-} from 'mongodb'
+} = require('mongodb');
 
-import express from 'express'
+const express = require('express')
 const app = express()
 
-import {
-    json
-} from 'body-parser'
+const bodyParser = require('body-parser')
 
-import fs from 'fs/promises'
-
-import cors from 'cors'
+const cors = require('cors')
 
 require('dotenv').config()
 
@@ -25,7 +21,7 @@ const dbName = "session7_project";
 const port = process.env.PORT
 
 
-app.use(json())
+app.use(bodyParser)
 app.use(cors())
 
 app.get('/challenges', async (req, res) => {
