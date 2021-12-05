@@ -75,9 +75,7 @@ app.post('/challenges', async (req, res) => {
         await client.close();
     }
 })
-
-app.delete()
-
+/*
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
-})
+})*/
