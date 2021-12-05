@@ -7,7 +7,10 @@ const app = express()
 
 const bodyParser = require('body-parser')
 
-const cors = require('cors')
+const cors = require('cors');
+const {
+    query
+} = require('express');
 
 require('dotenv').config()
 
@@ -75,7 +78,26 @@ app.post('/challenges', async (req, res) => {
 })
 
 app.get('/challenges/:id', async (req, res) => {
-    res.status(200).json(req)
+    try {
+        await client.connect()
+        const colli = client.db(dbName).collection('challenges')
+
+        const query = {
+            _id: req.params.id
+        }
+
+        const clngs = await colli.find(query)
+        res.status(200).json(clngs)
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            error: 'something went wrong',
+            value: error
+        })
+    } finally {
+        await client.close()
+    }
+
 })
 
 app.listen(port, () => {
