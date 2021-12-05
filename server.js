@@ -11,8 +11,6 @@ const cors = require('cors')
 
 require('dotenv').config()
 
-console.log(process.env.TEST)
-
 const client = new MongoClient(process.env.URL);
 
 // The database to use
@@ -75,7 +73,7 @@ app.post('/challenges', async (req, res) => {
         await client.close();
     }
 })
-/*
+
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-})*/
+    console.log(`API is running at http://localhost:${port}`)
+})
