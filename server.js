@@ -24,7 +24,7 @@ const port = process.env.PORT
 
 
 app.use(bodyParser.json())
-app.use(express.static('public'))
+//app.use(express.static('public'))
 app.use(cors())
 
 app.get('/challenges', async (req, res) => {
