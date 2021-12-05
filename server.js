@@ -20,8 +20,8 @@ const dbName = "session7_project";
 
 const port = process.env.PORT
 
-
-app.use(bodyParser)
+app.use(express.static('public'))
+app.use(bodyParser.json())
 app.use(cors())
 
 app.get('/challenges', async (req, res) => {
