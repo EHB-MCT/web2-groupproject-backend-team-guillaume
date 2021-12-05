@@ -74,6 +74,10 @@ app.post('/challenges', async (req, res) => {
     }
 })
 
+app.get('/challenges/:id', async (req, res) => {
+    res.status(200).json(req.params.id)
+})
+
 app.listen(port, () => {
     console.log(`API is running at http://localhost:${port}`)
 })
