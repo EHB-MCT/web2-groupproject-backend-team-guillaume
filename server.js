@@ -89,7 +89,6 @@ app.get('/challenges/:id', async (req, res) => {
         const clngs = await colli.findOne(query)
 
         res.status(200).json(clngs)
-        return
     } catch (error) {
         console.log(error)
         res.status(500).send({
