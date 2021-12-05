@@ -75,7 +75,7 @@ app.post('/challenges', async (req, res) => {
 })
 
 app.get('/challenges/:id', async (req, res) => {
-    res.status(200).json(req.params.id)
+    res.status(200).json(req)
 })
 
 app.listen(port, () => {
