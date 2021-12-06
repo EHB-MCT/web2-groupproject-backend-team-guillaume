@@ -119,8 +119,6 @@ app.put('/updateChallenges/:id', async (req, res) => {
             _id: ObjectId(req.params.id)
         };
 
-
-
         const updateDocument = {
             $set: {
                 name: req.body.name,
@@ -131,7 +129,6 @@ app.put('/updateChallenges/:id', async (req, res) => {
         res.status(200).json({
             message: 'Succesfully Updated Challenge: ' + req.body.name
         });
-
     } catch (error) {
         console.log(error);
         res.status(500).send({
@@ -144,7 +141,6 @@ app.put('/updateChallenges/:id', async (req, res) => {
 
 
 })
-
 
 
 //DELETE challenges from db
