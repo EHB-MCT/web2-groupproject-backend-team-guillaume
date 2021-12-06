@@ -26,6 +26,10 @@ app.use(express.static('public'))
 app.use(bodyParser.json())
 app.use(cors())
 
+app.get('/', (req, res) => {
+    res.status(300).redirect('/info.html')
+})
+
 app.get('/challenges', async (req, res) => {
     try {
         await client.connect()
@@ -101,6 +105,94 @@ app.get('/challenges/:id', async (req, res) => {
     }
 
 })
+//PUT challenges from db
+app.put('/updateChallenges/:id', async (req, res) => {
+    try {
+        //connect db
+        await client.connect();
+
+        //retrieve challenge data from db
+        const colli = client.db(dbName).collection('challenges')
+
+        //only look for a challenge with id
+        const query = {
+            _id: ObjectId(req.params.id)
+        };
+
+
+
+        const updateDocument = {
+            $set: {
+                name: req.body.name,
+            }
+        };
+        // updates document based on query
+        await colli.updateOne(query, updateDocument)
+        res.status(200).json({
+            message: 'Succesfully Updated Challenge: ' + req.body.name
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            error: "something went wrong",
+            value: error
+        })
+    }
+
+
+
+
+})
+
+
+
+//DELETE challenges from db
+app.delete('/deletechallenges/:id', async (req, res) => {
+
+    try {
+
+        await client.connect();
+
+
+
+        const collection = client.db(dbName).collection('challenges');
+
+
+
+        const query = {
+
+            _id: req.params.id
+
+        }
+
+
+
+        const challengeDelete = await collection.deleteOne(query)
+
+        console.log(challengeDelete);
+
+        res.status(200).send(challengeDelete)
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).send({
+
+            error: 'error',
+
+            value: error
+
+        });
+
+    }
+
+
+
+})
+
+
 
 app.delete('/deletechallenges/:id', async (req, res) => {
     try {
@@ -126,5 +218,5 @@ app.delete('/deletechallenges/:id', async (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`API is running at http://localhost:${port}`)
+    console.log(`REST API is running at http://localhost:${port}`);
 })
