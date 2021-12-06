@@ -159,7 +159,7 @@ app.get('/challenges/:id', async (req, res) => {
 
             //only look for a challenge with id
             const query = {
-                _id: ObjectId(req.params.id)
+                _id: req.params.id
             };
 
 
