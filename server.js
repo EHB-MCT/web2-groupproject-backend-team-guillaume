@@ -161,7 +161,7 @@ app.delete('/deletechallenges/:id', async (req, res) => {
 
         const query = {
 
-            _id: ObjectId(req.params.id)
+            _id: req.params.id
 
         }
 
