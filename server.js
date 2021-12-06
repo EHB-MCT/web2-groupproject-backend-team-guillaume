@@ -153,20 +153,11 @@ app.delete('/deletechallenges/:id', async (req, res) => {
     try {
 
         await client.connect();
-
-
-
         const collection = client.db(dbName).collection('challenges');
 
-
-
         const query = {
-
-            _id: req.params.id
-
+            _id: ObjectId(req.params.id)
         }
-
-
 
         const challengeDelete = await collection.deleteOne(query)
 
