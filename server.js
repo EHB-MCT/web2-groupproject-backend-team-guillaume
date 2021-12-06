@@ -1,5 +1,6 @@
 const {
-    MongoClient
+    MongoClient,
+    ObjectId
 } = require('mongodb');
 
 const express = require('express')
@@ -97,6 +98,29 @@ app.get('/challenges/:id', async (req, res) => {
         })
     } finally {
         await client.close()
+    }
+
+})
+
+app.delete('/deletechallenges/:id', async (req, res) => {
+    try {
+        await client.connect();
+
+        const collection = client.db(dbName).collection('challenges');
+
+        const query = {
+            _id: ObjectId(req.params.id)
+        }
+
+        const challengeDelete = await collection.deleteOne(query)
+        console.log(challengeDelete);
+        res.status(200).send(challengeDelete)
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            error: 'error',
+            value: error
+        });
     }
 
 })
