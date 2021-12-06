@@ -25,6 +25,10 @@ app.use(express.static('public'))
 app.use(bodyParser.json())
 app.use(cors())
 
+app.get('/', (req, res) => {
+    res.status(300).redirect('/info.html')
+})
+
 app.get('/challenges', async (req, res) => {
     try {
         await client.connect()
@@ -143,43 +147,48 @@ app.put('/updateChallenges/:id', async (req, res) => {
 
 
 //DELETE challenges from db
-app.delete('/deleteChallenges/:id', async (req, res) => {
-    //id is located in the query: req.params.id
+app.delete('/deletechallenges/:id', async (req, res) => {
+
     try {
-        //connect db
+
         await client.connect();
 
 
 
-        //retrieve challenge data
-        const colli = client.db(dbName).collection('challenges')
-        // const challenges = await coll.find({}).toArray();
+        const collection = client.db(dbName).collection('challenges');
 
 
 
-        //only look for a challenge with id
         const query = {
+
             _id: req.params.id
-        };
+
+        }
 
 
 
-        //DELETE challenge
-        await colli.deleteOne(query)
-        res.status(200).json({
-            message: 'Succesfully Deleted!'
-        });
+        const challengeDelete = await collection.deleteOne(query)
 
+        console.log(challengeDelete);
 
-
+        res.status(200).send(challengeDelete)
 
     } catch (error) {
+
         console.log(error);
+
         res.status(500).send({
-            error: "something went wrong",
+
+            error: 'error',
+
             value: error
-        })
+
+        });
+
     }
+
+
+
 })
 
 
