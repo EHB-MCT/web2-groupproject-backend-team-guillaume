@@ -159,7 +159,7 @@ app.delete('/deleteChallenges/:id', async (req, res) => {
 
         //only look for a challenge with id
         const query = {
-            _id: req.params.id
+            _id: ObjectId(req.params.id)
         };
 
 
