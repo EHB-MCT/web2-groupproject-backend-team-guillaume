@@ -78,109 +78,109 @@ app.post('/challenges', async (req, res) => {
 })
 
 app.get('/challenges/:id', async (req, res) => {
-        try {
-            await client.connect()
-            const colli = client.db(dbName).collection('challenges')
+    try {
+        await client.connect()
+        const colli = client.db(dbName).collection('challenges')
 
-            const query = {
-                _id: req.params.id
+        const query = {
+            _id: req.params.id
+        }
+
+        const clngs = await colli.findOne(query)
+
+        res.status(200).json(clngs)
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            error: 'something went wrong',
+            value: error
+        })
+    } finally {
+        await client.close()
+    }
+
+})
+//PUT challenges from db
+app.put('/updateChallenges/:id', async (req, res) => {
+    try {
+        //connect db
+        await client.connect();
+
+        //retrieve challenge data from db
+        const colli = client.db(dbName).collection('challenges')
+
+        //only look for a challenge with id
+        const query = {
+            _id: ObjectId(req.params.id)
+        };
+
+
+
+        const updateDocument = {
+            $set: {
+                name: req.body.name,
             }
+        };
+        // updates document based on query
+        await colli.updateOne(query, updateDocument)
+        res.status(200).json({
+            message: 'Succesfully Updated Challenge: ' + req.body.name
+        });
 
-            const clngs = await colli.findOne(query)
-
-            res.status(200).json(clngs)
-        } catch (error) {
-            console.log(error)
-            res.status(500).send({
-                error: 'something went wrong',
-                value: error
-            })
-        } finally {
-            await client.close()
-        }
-
-    })
-    //PUT challenges from db
-    .put('/updateChallenges/:id', async (req, res) => {
-        try {
-            //connect db
-            await client.connect();
-
-            //retrieve challenge data from db
-            const colli = client.db(dbName).collection('challenges')
-
-            //only look for a challenge with id
-            const query = {
-                _id: ObjectId(req.params.id)
-            };
-
-
-
-            const updateDocument = {
-                $set: {
-                    name: req.body.name,
-                }
-            };
-            // updates document based on query
-            await colli.updateOne(query, updateDocument)
-            res.status(200).json({
-                message: 'Succesfully Updated Challenge: ' + req.body.name
-            });
-
-        } catch (error) {
-            console.log(error);
-            res.status(500).send({
-                error: "something went wrong",
-                value: error
-            })
-        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            error: "something went wrong",
+            value: error
+        })
+    }
 
 
 
 
-    })
+})
 
 
 
-    //DELETE challenges from db
-    .delete('/deleteChallenges/:id', async (req, res) => {
-        //id is located in the query: req.params.id
-        try {
-            //connect db
-            await client.connect();
+//DELETE challenges from db
+app.delete('/deleteChallenges/:id', async (req, res) => {
+    //id is located in the query: req.params.id
+    try {
+        //connect db
+        await client.connect();
 
 
 
-            //retrieve challenge data
-            const colli = client.db(dbName).collection('challenges')
-            // const challenges = await coll.find({}).toArray();
+        //retrieve challenge data
+        const colli = client.db(dbName).collection('challenges')
+        // const challenges = await coll.find({}).toArray();
 
 
 
-            //only look for a challenge with id
-            const query = {
-                _id: req.params.id
-            };
+        //only look for a challenge with id
+        const query = {
+            _id: req.params.id
+        };
 
 
 
-            //DELETE challenge
-            await colli.deleteOne(query)
-            res.status(200).json({
-                message: 'Succesfully Deleted!'
-            });
+        //DELETE challenge
+        await colli.deleteOne(query)
+        res.status(200).json({
+            message: 'Succesfully Deleted!'
+        });
 
 
 
 
-        } catch (error) {
-            console.log(error);
-            res.status(500).send({
-                error: "something went wrong",
-                value: error
-            })
-        }
-    })
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            error: "something went wrong",
+            value: error
+        })
+    }
+})
 
 
 
