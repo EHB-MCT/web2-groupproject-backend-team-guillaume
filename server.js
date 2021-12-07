@@ -57,7 +57,6 @@ app.post('/challenges', async (req, res) => {
 
         await client.connect();
 
-        // Construct a document                                                                                                                                                              
         let challengeDoc = {
             name: req.body.name,
             points: req.body.points,
@@ -67,13 +66,10 @@ app.post('/challenges', async (req, res) => {
 
         res.status(200).send('succesfully uploaded')
 
-        // Insert a single document, wait for promise so we can read it back
         const p = await col.insertOne(challengeDoc);
 
-        // Find one document
         const myDoc = await col.findOne();
 
-        // Print to the console
         console.log(myDoc);
     } catch (err) {
         console.log(err.stack);
@@ -108,13 +104,9 @@ app.get('/challenges/:id', async (req, res) => {
 //PUT challenges from db
 app.put('/updateChallenges/:id', async (req, res) => {
     try {
-        //connect db
         await client.connect();
-
-        //retrieve challenge data from db
         const colli = client.db(dbName).collection('challenges')
 
-        //only look for a challenge with id
         const query = {
             _id: ObjectId(req.params.id)
         };
@@ -124,7 +116,7 @@ app.put('/updateChallenges/:id', async (req, res) => {
                 name: req.body.name,
             }
         };
-        // updates document based on query
+
         await colli.updateOne(query, updateDocument)
         res.status(200).json({
             message: 'Succesfully Updated Challenge: ' + req.body.name
