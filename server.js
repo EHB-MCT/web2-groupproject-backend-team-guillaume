@@ -114,6 +114,9 @@ app.put('/updateChallenges/:id', async (req, res) => {
         const updateDocument = {
             $set: {
                 name: req.body.name,
+                course: req.body.course,
+                points: req.body.points,
+                session: req.body.session
             }
         };
 
